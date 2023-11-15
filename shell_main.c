@@ -4,6 +4,14 @@
 #include "simple_shell.h"
 extern char **environ;
 
+
+/**
+ * main - void.
+ * @argc: number of arguments
+ * @argv: array of arguments
+ *
+ * Return: o if success.
+ */
 int main() {
     char *input = NULL;
     size_t len = 0;
@@ -60,7 +68,7 @@ int main() {
                 if (chdir(args[1]) == -1) {
                     perror("chdir");
                 }
-		continue;
+                continue;
             } else if (my_strcmp(args[0],"cd") == -1) {
                 write_err("simple_shell: cd: missing argument\n");
             }

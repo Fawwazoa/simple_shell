@@ -2,6 +2,13 @@
 
 #define BUFFER_SIZE 1024
 
+
+/* getline - custom getline fuction
+ * @lineptr: pointer of the line
+ * @n : size of the pointer 
+ *
+ * Return: 0 if success.
+ */
 ssize_t _getline(char **lineptr, size_t *n) {
     static char buffer[BUFFER_SIZE];
     static size_t buffer_index = 0;
