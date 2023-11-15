@@ -29,5 +29,6 @@ ssize_t _getline(char **lineptr, size_t *n);
 int is_delimiter(char c);
 void tokenize(char *input, char *tokens[MAX_TOKENS]);
 char *get_command_path(const char *command);
+int exec_command(char *args[]);
 
 #endif /* SIMPLE_SHELL_H */
