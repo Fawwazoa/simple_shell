@@ -7,8 +7,6 @@ extern char **environ;
 
 /**
  * main - Entry point for the simple shell.
- * @ac: Number of command line arguments.
- * @av: Array of command line argument strings.
  *
  * Return: 0 on success.
  */
