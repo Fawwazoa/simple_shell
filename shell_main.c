@@ -1,5 +1,12 @@
 #include "simple_shell.h"
 
+/**
+ * main - Entry point for the simple shell.
+ *
+ * Return: 0 on success.
+ */
+
+
 int main() {
     char input[100];
     char *args[10];  /*Assume a maximum of 10 arguments*/
@@ -22,6 +29,10 @@ int main() {
 
         args[i] = NULL;  /* Null-terminate the argument list*/
 
+	 if (my_strcmp(args[0], "exit") == 0) {
+            
+            exit(0);
+	}
         /* Fork and execute the command*/
         pid = fork();
 
