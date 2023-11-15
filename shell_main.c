@@ -6,13 +6,14 @@ extern char **environ;
 
 
 /**
- * main - void.
- * @argc: number of arguments
- * @argv: array of arguments
+ * main - Entry point for the simple shell.
+ * @ac: Number of command line arguments.
+ * @av: Array of command line argument strings.
  *
- * Return: o if success.
+ * Return: 0 on success.
  */
-int main() {
+
+int main(int ac , char **av) {
     char *input = NULL;
     size_t len = 0;
     ssize_t read;
@@ -62,7 +63,11 @@ int main() {
         /* Handle built-in commands*/
         if (my_strcmp(args[0], "exit") == 0) {
             free(input);
-            exit(0);
+	    if (ac == 3)
+                exit(atoi(av[2]));   
+	    else 
+		    exit(0);
+
         } else if (my_strcmp(args[0], "cd") == 0) {
             if (args[1] != NULL) {
                 if (chdir(args[1]) == -1) {
