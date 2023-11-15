@@ -13,14 +13,13 @@ extern char **environ;
  * Return: 0 on success.
  */
 
-int main(int ac , char **av) {
+int main(int argc , char **argv) {
     char *input = NULL;
     size_t len = 0;
     ssize_t read;
     pid_t pid;
     char *token;
     int i;
-    char *args[11];
     bool pipe= false;
     int status;
     char **env;
@@ -50,7 +49,7 @@ int main(int ac , char **av) {
          i = 0;
 
         while (token != NULL) {
-            args[i++] = token;
+            argv[i++] = token;
             token = strtok(NULL, " \n");
             
             if (i >= 10) {
@@ -58,29 +57,29 @@ int main(int ac , char **av) {
                 break;
         }
 
-        args[i] = NULL;  /* Null-terminate the argument list*/
+        argv[i] = NULL;  /* Null-terminate the argument list*/
 
         /* Handle built-in commands*/
-        if (my_strcmp(args[0], "exit") == 0) {
+        if (my_strcmp(argv[0], "exit") == 0) {
             free(input);
-	    if (ac == 3)
-                exit(atoi(av[2]));   
+	    if (argc == 3)
+                exit(atoi(argv[2]));   
 	    else 
 		    exit(0);
 
-        } else if (my_strcmp(args[0], "cd") == 0) {
-            if (args[1] != NULL) {
-                if (chdir(args[1]) == -1) {
+        } else if (my_strcmp(argv[0], "cd") == 0) {
+            if (argv[1] != NULL) {
+                if (chdir(argv[1]) == -1) {
                     perror("chdir");
                 }
                 continue;
-            } else if (my_strcmp(args[0],"cd") == -1) {
+            } else if (my_strcmp(argv[0],"cd") == -1) {
                 write_err("simple_shell: cd: missing argument\n");
             }
             continue;  /* Skip the fork and wait*/
             }
 
-        else if (my_strcmp(args[0], "env") == 0) {
+        else if (my_strcmp(argv[0], "env") == 0) {
             /* Implement env built-in */
             env = environ;
             while (*env != NULL) {
@@ -90,7 +89,7 @@ int main(int ac , char **av) {
             continue;  /* Skip the fork and wait */
         }
         /* Check if the command exists in PATH */
-        if (access(args[0], F_OK) == -1) {
+        if (access(argv[0], F_OK) == -1) {
             write_err("simple_shell: command not found\n");
             continue;  /* Display prompt again without forking */
         }
@@ -99,7 +98,7 @@ int main(int ac , char **av) {
 
         if (pid == 0) {
             /* Child process*/
-            execve(args[0], args, NULL);
+            execve(argv[0], argv, NULL);
             perror("Error in execve: ");
             _exit(EXIT_FAILURE);
         } else if (pid > 0) {
