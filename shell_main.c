@@ -28,11 +28,6 @@ int main() {
         }
 
         args[i] = NULL;  /* Null-terminate the argument list*/
-
-	 if (my_strcmp(args[0], "exit") == 0) {
-            
-            exit(0);
-	}
         /* Fork and execute the command*/
         pid = fork();
 
